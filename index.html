@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{ message }}
+		</div>
+		<div id="app-2">
+		  <span v-bind:title="message">
+			鼠标悬停几秒钟查看此处动态绑定的提示信息！
+		  </span>
+		</div>
+		<div id="app-3">
+			<span v-if="see">你看到我了吧</span>
+		</div>
+		<div id="app-4">
+		  <ol>
+			<li v-for="obj in objs">
+				{{obj.text}}
+			</li>
+		  </ol>
+		</div>
+		<div id="app-5">
+			<p>{{message}}</p>
+			<button v-on:click="rev">逆转消息</button>
+		</div>
+		<div id="app-6">
+			<p>{{message}}</p>
+			<input v-model="message" />
+		</div>
+		<div id="app-7">
+			<shenlm v-bind:obj="item" v-for="item in lists" :key="item.id"></shenlm>
+		</div>
+		<div id="app-8">
+			<p>{{message}}</p>
+			<p>{{messageComputed}}</p>
+		</div>
+	</body>
+	<script>
+		var app = new Vue({
+		  el: '#app',
+		  data: {
+			message: 'Hello Vue!'
+		  }
+		})
+		var app2 = new Vue({
+		  el: '#app-2',
+		  data: {
+			message: '页面加载于 ' + new Date().toLocaleString()
+		  }
+		})
+		var app3 = new Vue({
+			el: '#app-3',
+			data: {
+				see: false
+			}
+		})
+		var app4 = new Vue({
+			el: '#app-4',
+			data: {
+				objs: [
+					{text:'123'},
+					{text:'456'},
+					{text:'789'}
+				]
+			}
+		})
+		var app5 = new Vue({
+			el: '#app-5',
+			data: {
+				message: '你好吗，我是沈林明',
+			},
+			methods: {
+				rev () {
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		})
+		var app6 = new Vue({
+			el: '#app-6',
+			data: {
+				message: '你好吗'
+			}
+		})
+		Vue.component('shenlm', {
+			props: ['obj'],
+			template: '<ol>{{obj.text}}</ol>'
+		})
+		var app7 = new Vue({
+			el: '#app-7',
+			data: {
+				lists: [
+					{text: 'nihao', id: 1},
+					{text: 'wohao', id: 2},
+					{text: 'dajiahao', id: 3}
+				]
+			}
+		})
+		let app8 = new Vue({
+			el: '#app-8',
+			data: {
+				message: '你好，我是沈林明'
+			},
+			computed:{
+				messageComputed: function () {
+					return this.message.split('').reverse().join('')
+				}
+			}
+		})
+	</script>
+</html>
